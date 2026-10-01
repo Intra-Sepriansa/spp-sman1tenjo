@@ -50,25 +50,6 @@ if ($siswaDitemukan) {
     $totalTunggakanSiswa = count($bulanBelum) * $tarifPerBulan;
 }
 
-// Rekap sederhana tunggakan semua siswa
-$rekapTunggakan = [];
-foreach ($daftarSiswa as $s) {
-    $nisn = $s['nisn'];
-    $tarif = (int)($s['nominal_spp'] ?? 0);
-    $terbayar = array_filter($semuaTerbayar, fn($t) => $t['nisn'] === $nisn && (string)$t['tahun_dibayar'] === (string)$tahunAktif && $t['status_verifikasi'] === 'Terverifikasi');
-    $lunasBln = array_map(fn($t) => $t['bulan_dibayar'], $terbayar);
-    $unpaid   = array_values(array_diff($daftarBulan, $lunasBln));
-    
-    $rekapTunggakan[] = [
-        'nisn'            => $nisn,
-        'nama'            => $s['nama'],
-        'nama_kelas'      => $s['nama_kelas'],
-        'nominal_spp'     => $tarif,
-        'bulan_belum'     => $unpaid,
-        'total_tunggakan' => count($unpaid) * $tarif,
-    ];
-}
-
 $pageTitle = 'Cek Pembayaran';
 require_once __DIR__ . '/layouts/header.php';
 ?>
@@ -291,72 +272,6 @@ require_once __DIR__ . '/layouts/header.php';
             <?php endif; ?>
         </div>
     <?php endif; ?>
-</div>
-
-<!-- 2. Tabel Daftar Siswa & Tunggakan SPP (Tahun Berjalan) -->
-<div class="bg-white rounded-xl shadow-xs border border-slate-300/80 overflow-hidden mb-6">
-    <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Daftar Siswa & Bulan Belum Bayar (Tahun <?= $tahunAktif ?>)
-        </h4>
-        <span class="text-xs text-slate-500 font-medium"><?= count($rekapTunggakan) ?> Siswa</span>
-    </div>
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs">
-            <thead>
-                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
-                    <th class="px-4 py-3 w-12 text-center">No</th>
-                    <th class="px-4 py-3">NISN & Nama Siswa</th>
-                    <th class="px-4 py-3">Kelas</th>
-                    <th class="px-4 py-3">Tarif / Bln</th>
-                    <th class="px-4 py-3">Bulan Belum Dibayar</th>
-                    <th class="px-4 py-3 text-right">Total Tunggakan</th>
-                    <th class="px-4 py-3 text-center w-28">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-                <?php $no = 1; foreach ($rekapTunggakan as $rt): ?>
-                <tr class="hover:bg-slate-50/70 transition-colors">
-                    <td class="px-4 py-3 text-center text-slate-400 font-mono text-[11px]"><?= $no++ ?></td>
-                    <td class="px-4 py-3">
-                        <a href="index.php?page=cek_pembayaran&cari_nisn=<?= $rt['nisn'] ?>" class="font-bold text-slate-900 hover:text-orange-600 transition">
-                            <?= htmlspecialchars($rt['nama']) ?>
-                        </a>
-                        <span class="text-slate-400 font-mono text-[10px] block">NISN: <?= htmlspecialchars($rt['nisn']) ?></span>
-                    </td>
-                    <td class="px-4 py-3 text-slate-700"><?= htmlspecialchars($rt['nama_kelas']) ?></td>
-                    <td class="px-4 py-3 font-mono text-slate-800"><?= formatRupiah($rt['nominal_spp']) ?></td>
-                    <td class="px-4 py-3 text-slate-700">
-                        <?php if (empty($rt['bulan_belum'])): ?>
-                            <span class="text-emerald-600 font-semibold">Lunas Semua</span>
-                        <?php else: ?>
-                            <span><?= implode(', ', $rt['bulan_belum']) ?></span>
-                            <span class="text-rose-600 font-semibold text-[11px]">(<?= count($rt['bulan_belum']) ?> bln)</span>
-                        <?php endif; ?>
-                    </td>
-                    <td class="px-4 py-3 text-right font-mono font-semibold <?= $rt['total_tunggakan'] > 0 ? 'text-rose-600' : 'text-emerald-600' ?>">
-                        <?= formatRupiah($rt['total_tunggakan']) ?>
-                    </td>
-                    <td class="px-4 py-3 text-center">
-                        <div class="flex items-center justify-center space-x-1.5">
-                            <a href="index.php?page=cek_pembayaran&cari_nisn=<?= $rt['nisn'] ?>" 
-                               class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-[11px] border border-slate-300 transition">
-                                Cek
-                            </a>
-                            <?php if (!empty($rt['bulan_belum'])): ?>
-                            <a href="index.php?page=pembayaran&nisn=<?= $rt['nisn'] ?>&bulan=<?= implode(',', $rt['bulan_belum']) ?>" 
-                               class="px-2 py-1 rounded bg-orange-600 hover:bg-orange-700 text-white font-medium text-[11px] transition"
-                               title="Bayar Tunggakan Siswa Ini">
-                                Bayar
-                            </a>
-                            <?php endif; ?>
-                        </div>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
 </div>
 
 <?php require_once __DIR__ . '/layouts/footer.php'; ?>
