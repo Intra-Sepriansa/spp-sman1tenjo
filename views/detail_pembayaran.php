@@ -10,7 +10,7 @@ if (!isset($daftarPembayaran)) {
     exit;
 }
 
-$pageTitle = 'Detail Pembayaran';
+$pageTitle = 'Histori Pembayaran';
 require_once __DIR__ . '/layouts/header.php';
 
 $filterBulan = $_GET['bulan'] ?? '';
@@ -67,7 +67,7 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                     <th class="px-4 py-3">Metode</th>
                     <th class="px-4 py-3">Status</th>
                     <th class="px-4 py-3">Petugas</th>
-                    <th class="px-4 py-3 text-center w-24">Aksi</th>
+                    <th class="px-4 py-3 text-center whitespace-nowrap min-w-[140px]">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
@@ -106,20 +106,22 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                             <?php endif; ?>
                         </td>
                         <td class="px-4 py-3 text-slate-500 text-[11px] font-medium"><?= htmlspecialchars($p['nama_petugas']) ?></td>
-                        <td class="px-4 py-3 text-center">
-                            <div class="flex items-center justify-center space-x-1.5">
-                                <!-- Tombol Cetak Kuitansi Langsung (Tanpa Ikon, Tanpa Halaman Baru) -->
+                        <td class="px-4 py-3 text-center whitespace-nowrap">
+                            <div class="inline-flex items-center justify-center gap-1.5">
+                                <!-- Tombol Cetak Kuitansi Langsung -->
                                 <button type="button" onclick='cetakLangsung(<?= json_encode($p) ?>)' 
-                                        class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-300 transition cursor-pointer" 
+                                        class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-300 transition cursor-pointer inline-flex items-center gap-1 shadow-xs" 
                                         title="Cetak Kuitansi SMAN 1 TENJO">
-                                    Cetak
+                                    <?= renderIcon('printer', 'w-3.5 h-3.5') ?>
+                                    <span>Cetak</span>
                                 </button>
-                                <!-- Tombol hapus transaksi (hanya admin yang punya hak) -->
-                                <?php if ($userLogin['level'] === 'admin'): ?>
-                                <button type="button" onclick="konfirmasiHapus('index.php?action=pembayaran_hapus&id=<?= $p['id_pembayaran'] ?>', 'Hapus transaksi <?= $p['kode_transaksi'] ?>?')" 
-                                        class="p-1 rounded bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 transition cursor-pointer" 
+                                <!-- Tombol Hapus Transaksi (Khusus Admin) -->
+                                <?php if (strtolower($userLogin['level'] ?? '') === 'admin'): ?>
+                                <button type="button" onclick="konfirmasiHapus('index.php?action=pembayaran_hapus&id=<?= $p['id_pembayaran'] ?>', 'Hapus transaksi <?= htmlspecialchars($p['kode_transaksi']) ?>?')" 
+                                        class="px-2.5 py-1 rounded bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs border border-rose-200 transition cursor-pointer inline-flex items-center gap-1 shadow-xs" 
                                         title="Hapus Transaksi">
                                     <?= renderIcon('trash', 'w-3.5 h-3.5') ?>
+                                    <span>Hapus</span>
                                 </button>
                                 <?php endif; ?>
                             </div>

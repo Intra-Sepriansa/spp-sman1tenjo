@@ -14,7 +14,7 @@ if (!isset($daftarSiswa)) {
 $periodeTerbayar = $periodeTerbayar ?? [];
 $paramNisn       = bersihkanInput($_GET['nisn'] ?? '');
 $paramBulan      = bersihkanInput($_GET['bulan'] ?? '');
-$pageTitle       = 'Pembayaran';
+$pageTitle       = 'Pembayaran SPP';
 require_once __DIR__ . '/layouts/header.php';
 
 // Daftar 12 nama bulan untuk pilihan periode SPP

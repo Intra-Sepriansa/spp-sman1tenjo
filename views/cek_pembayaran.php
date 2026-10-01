@@ -50,7 +50,7 @@ if ($siswaDitemukan) {
     $totalTunggakanSiswa = count($bulanBelum) * $tarifPerBulan;
 }
 
-$pageTitle = 'Cek Pembayaran';
+$pageTitle = 'Cek Tunggakan';
 require_once __DIR__ . '/layouts/header.php';
 ?>
 
