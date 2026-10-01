@@ -117,31 +117,38 @@ require_once __DIR__ . '/layouts/header.php';
                     </div>
                 </div>
 
-                <!-- Tabel Status Pembayaran SPP 12 Bulan Siswa -->
+                <!-- Tabel Gabungan: Status & Riwayat Pembayaran SPP 12 Bulan Siswa -->
                 <div class="mb-5">
-                    <div class="flex items-center justify-between mb-2">
-                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                            Status Pembayaran SPP 12 Bulan (Tahun <?= $tahunAktif ?>)
-                        </h4>
-                        <div class="text-xs font-semibold flex items-center space-x-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                                Status & Riwayat Pembayaran SPP 12 Bulan (Tahun <?= $tahunAktif ?>)
+                            </h4>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Rangkuman terpadu tagihan per bulan, kode transaksi, tanggal bayar, dan status pelunasan.</p>
+                        </div>
+                        <div class="text-xs font-semibold flex items-center space-x-2 shrink-0">
                             <span><span class="text-slate-500 font-normal">Tunggakan:</span> <span class="text-rose-600 font-mono font-bold"><?= formatRupiah($totalTunggakanSiswa) ?></span> <span class="text-slate-400 font-normal">(<?= count($bulanBelum) ?> bln)</span></span>
                             <?php if (!empty($bulanBelum)): ?>
                             <a href="index.php?page=pembayaran&nisn=<?= $siswaDitemukan['nisn'] ?>&bulan=<?= implode(',', $bulanBelum) ?>" 
-                               class="px-2.5 py-1 bg-orange-600 hover:bg-orange-700 text-white rounded text-[11px] font-semibold transition cursor-pointer shadow-xs">
-                                Bayar Sekaligus &rarr;
+                               class="px-2.5 py-1 bg-orange-600 hover:bg-orange-700 text-white rounded text-[11px] font-semibold transition cursor-pointer shadow-xs inline-flex items-center gap-1">
+                                <span>Bayar Sekaligus</span>
+                                <span>&rarr;</span>
                             </a>
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="rounded-lg border border-slate-200 overflow-hidden">
-                        <table class="w-full text-left border-collapse text-xs">
+                    <div class="rounded-lg border border-slate-200 overflow-hidden overflow-x-auto bg-white">
+                        <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                             <thead>
-                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px]">
-                                    <th class="px-3 py-2 w-12 text-center">No</th>
-                                    <th class="px-3 py-2">Bulan</th>
-                                    <th class="px-3 py-2">Tarif SPP</th>
-                                    <th class="px-3 py-2">Status</th>
-                                    <th class="px-3 py-2 text-center w-28">Aksi</th>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
+                                    <th class="px-3 py-2.5 w-10 text-center">No</th>
+                                    <th class="px-3 py-2.5">Bulan</th>
+                                    <th class="px-3 py-2.5">Tarif SPP</th>
+                                    <th class="px-3 py-2.5">Kode Transaksi</th>
+                                    <th class="px-3 py-2.5">Tgl Bayar</th>
+                                    <th class="px-3 py-2.5">Petugas</th>
+                                    <th class="px-3 py-2.5">Status</th>
+                                    <th class="px-3 py-2.5 text-center">Aksi / Kuitansi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -155,27 +162,56 @@ require_once __DIR__ . '/layouts/header.php';
                                         }
                                     }
                                     ?>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="px-3 py-2 text-center text-slate-400 font-mono text-[11px]"><?= $no++ ?></td>
-                                        <td class="px-3 py-2 font-semibold text-slate-800"><?= $bln ?></td>
-                                        <td class="px-3 py-2 font-mono text-slate-700"><?= formatRupiah($tarifPerBulan) ?></td>
-                                        <td class="px-3 py-2">
-                                            <?php if ($trx && $trx['status_verifikasi'] === 'Terverifikasi'): ?>
-                                                <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">Lunas</span>
-                                            <?php elseif ($trx && $trx['status_verifikasi'] === 'Menunggu Verifikasi'): ?>
-                                                <span class="text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200 text-[10px]">Menunggu Verifikasi</span>
+                                    <tr class="hover:bg-slate-50/80 transition-colors">
+                                        <td class="px-3 py-2.5 text-center text-slate-400 font-mono text-[11px]"><?= $no++ ?></td>
+                                        <td class="px-3 py-2.5 font-semibold text-slate-800"><?= $bln ?></td>
+                                        <td class="px-3 py-2.5 font-mono text-slate-700 font-semibold"><?= formatRupiah($tarifPerBulan) ?></td>
+                                        <td class="px-3 py-2.5">
+                                            <?php if ($trx): ?>
+                                                <span class="font-mono text-[11px] font-semibold text-orange-600 bg-orange-50 px-2 py-0.5 rounded border border-orange-200">
+                                                    <?= htmlspecialchars($trx['kode_transaksi']) ?>
+                                                </span>
                                             <?php else: ?>
-                                                <span class="text-rose-700 font-semibold bg-rose-50 px-2 py-0.5 rounded border border-rose-200 text-[10px]">Belum Bayar</span>
+                                                <span class="text-slate-300 font-mono">-</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="px-3 py-2 text-center">
+                                        <td class="px-3 py-2.5 text-slate-600 text-[11px] font-mono">
+                                            <?= $trx ? date('d/m/Y', strtotime($trx['tgl_bayar'])) : '<span class="text-slate-300">-</span>' ?>
+                                        </td>
+                                        <td class="px-3 py-2.5 text-slate-600 text-[11px]">
+                                            <?= $trx ? htmlspecialchars($trx['nama_petugas']) : '<span class="text-slate-300">-</span>' ?>
+                                        </td>
+                                        <td class="px-3 py-2.5">
                                             <?php if ($trx && $trx['status_verifikasi'] === 'Terverifikasi'): ?>
-                                                <span class="text-slate-400 text-[11px]">-</span>
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                    Lunas
+                                                </span>
                                             <?php elseif ($trx && $trx['status_verifikasi'] === 'Menunggu Verifikasi'): ?>
-                                                <span class="text-amber-600 text-[11px] font-medium">Proses</span>
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                                    Menunggu
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                                                    Belum Bayar
+                                                </span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="px-3 py-2.5 text-center">
+                                            <?php if ($trx && $trx['status_verifikasi'] === 'Terverifikasi'): ?>
+                                                <a href="index.php?page=detail_pembayaran&q=<?= urlencode($trx['kode_transaksi']) ?>" 
+                                                   class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-semibold inline-flex items-center gap-1 border border-slate-300 transition" 
+                                                   title="Lihat Histori & Cetak Kuitansi">
+                                                    <?= renderIcon('printer', 'w-3.5 h-3.5') ?>
+                                                    <span>Kuitansi</span>
+                                                </a>
+                                            <?php elseif ($trx && $trx['status_verifikasi'] === 'Menunggu Verifikasi'): ?>
+                                                <span class="text-amber-600 text-[11px] font-medium bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Proses</span>
                                             <?php else: ?>
                                                 <a href="index.php?page=pembayaran&nisn=<?= $siswaDitemukan['nisn'] ?>&bulan=<?= $bln ?>" 
-                                                   class="px-2.5 py-1 bg-orange-600 hover:bg-orange-700 text-white rounded text-[11px] font-medium inline-block transition">
+                                                   class="px-2.5 py-1 bg-orange-600 hover:bg-orange-700 text-white rounded text-[11px] font-semibold inline-block transition shadow-xs">
                                                     Bayar
                                                 </a>
                                             <?php endif; ?>
@@ -187,31 +223,38 @@ require_once __DIR__ . '/layouts/header.php';
                     </div>
                 </div>
 
-                <!-- Tabel Riwayat Transaksi Siswa -->
-                <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">Riwayat Pembayaran Siswa</h4>
-                <div class="rounded-lg border border-slate-200 overflow-hidden">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px]">
-                                <th class="px-3 py-2">No</th>
-                                <th class="px-3 py-2">Kode</th>
-                                <th class="px-3 py-2">Tanggal</th>
-                                <th class="px-3 py-2">Bulan & Tahun</th>
-                                <th class="px-3 py-2">Nominal</th>
-                                <th class="px-3 py-2">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            <?php if (empty($riwayatSiswa)): ?>
-                                <tr><td colspan="6" class="px-3 py-4 text-center text-slate-400">Belum ada riwayat transaksi pembayaran untuk siswa ini.</td></tr>
-                            <?php else: ?>
-                                <?php $no = 1; foreach ($riwayatSiswa as $r): ?>
+                <!-- Jika ada riwayat transaksi di luar tahun aktif, tampilkan tabel ringkas di bawahnya -->
+                <?php 
+                $transaksiTahunLain = array_filter($riwayatSiswa, fn($r) => (string)$r['tahun_dibayar'] !== (string)$tahunAktif);
+                ?>
+                <?php if (!empty($transaksiTahunLain)): ?>
+                <div class="mb-5">
+                    <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+                        Riwayat Transaksi Tahun Lainnya
+                    </h4>
+                    <div class="rounded-lg border border-slate-200 overflow-hidden overflow-x-auto bg-white">
+                        <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px]">
+                                    <th class="px-3 py-2">No</th>
+                                    <th class="px-3 py-2">Kode</th>
+                                    <th class="px-3 py-2">Tanggal</th>
+                                    <th class="px-3 py-2">Bulan & Tahun</th>
+                                    <th class="px-3 py-2">Nominal</th>
+                                    <th class="px-3 py-2">Petugas</th>
+                                    <th class="px-3 py-2">Status</th>
+                                    <th class="px-3 py-2 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <?php $noLain = 1; foreach ($transaksiTahunLain as $r): ?>
                                 <tr class="hover:bg-slate-50">
-                                    <td class="px-3 py-2 text-slate-400 font-mono text-[11px]"><?= $no++ ?></td>
+                                    <td class="px-3 py-2 text-slate-400 font-mono text-[11px]"><?= $noLain++ ?></td>
                                     <td class="px-3 py-2 font-mono text-orange-600 font-semibold"><?= htmlspecialchars($r['kode_transaksi']) ?></td>
                                     <td class="px-3 py-2 text-slate-600"><?= date('d/m/Y', strtotime($r['tgl_bayar'])) ?></td>
                                     <td class="px-3 py-2 font-semibold text-slate-800"><?= htmlspecialchars($r['bulan_dibayar']) ?> <?= htmlspecialchars($r['tahun_dibayar']) ?></td>
                                     <td class="px-3 py-2 font-mono font-semibold text-slate-900"><?= formatRupiah($r['jumlah_bayar']) ?></td>
+                                    <td class="px-3 py-2 text-slate-600"><?= htmlspecialchars($r['nama_petugas']) ?></td>
                                     <td class="px-3 py-2">
                                         <?php if ($r['status_verifikasi'] === 'Terverifikasi'): ?>
                                             <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">Terverifikasi</span>
@@ -219,12 +262,19 @@ require_once __DIR__ . '/layouts/header.php';
                                             <span class="text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200 text-[10px]">Menunggu</span>
                                         <?php endif; ?>
                                     </td>
+                                    <td class="px-3 py-2 text-center">
+                                        <a href="index.php?page=detail_pembayaran&q=<?= urlencode($r['kode_transaksi']) ?>" 
+                                           class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[10px] font-medium border border-slate-300">
+                                            Kuitansi
+                                        </a>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <?php endif; ?>
 
             <?php else: ?>
                 <div class="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs">
