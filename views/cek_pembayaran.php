@@ -13,8 +13,16 @@ if (!isset($daftarSiswa)) {
 
 // Inisialisasi variabel default
 $daftarSiswa    = $daftarSiswa ?? [];
-$cariNisn       = $cariNisn ?? bersihkanInput($_GET['cari_nisn'] ?? '');
+$cariNisn       = $cariNisn ?? (!empty($_GET['cari_nisn']) ? bersihkanInput($_GET['cari_nisn']) : ($daftarSiswa[0]['nisn'] ?? ''));
 $siswaDitemukan = $siswaDitemukan ?? null;
+if (empty($siswaDitemukan) && !empty($cariNisn) && !empty($daftarSiswa)) {
+    foreach ($daftarSiswa as $s) {
+        if ($s['nisn'] === $cariNisn) {
+            $siswaDitemukan = $s;
+            break;
+        }
+    }
+}
 $riwayatSiswa   = $riwayatSiswa ?? [];
 $daftarMenunggu = $daftarMenunggu ?? [];
 $semuaTerbayar  = $semuaTerbayar ?? [];

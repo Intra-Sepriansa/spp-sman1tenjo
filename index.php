@@ -365,7 +365,7 @@ switch ($page) {
     // Menu 4: Cek Pembayaran & Tunggakan Siswa
     case 'cek_pembayaran':
         $daftarSiswa     = $siswaModel->ambilSemua();
-        $cariNisn        = bersihkanInput($_GET['cari_nisn'] ?? '');
+        $cariNisn        = !empty($_GET['cari_nisn']) ? bersihkanInput($_GET['cari_nisn']) : ($daftarSiswa[0]['nisn'] ?? '');
         $siswaDitemukan  = !empty($cariNisn) ? $siswaModel->ambilBerdasarkanId($cariNisn) : null;
         $riwayatSiswa    = $siswaDitemukan ? $pembayaranModel->ambilRiwayatSiswa($cariNisn) : [];
         $semuaTerbayar   = $pembayaranModel->ambilSemuaPeriodeTerbayar();
