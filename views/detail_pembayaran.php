@@ -67,7 +67,7 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                     <th class="px-4 py-3">Metode</th>
                     <th class="px-4 py-3">Status</th>
                     <th class="px-4 py-3">Petugas</th>
-                    <th class="px-4 py-3 text-center whitespace-nowrap min-w-[140px]">Aksi</th>
+                    <th class="px-4 py-3 text-center whitespace-nowrap w-24">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
@@ -107,21 +107,19 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                         </td>
                         <td class="px-4 py-3 text-slate-500 text-[11px] font-medium"><?= htmlspecialchars($p['nama_petugas']) ?></td>
                         <td class="px-4 py-3 text-center whitespace-nowrap">
-                            <div class="inline-flex items-center justify-center gap-1.5">
-                                <!-- Tombol Cetak Kuitansi Langsung -->
+                            <div class="inline-flex items-center justify-center space-x-1.5">
+                                <!-- Tombol Cetak Kuitansi Langsung (Icon Printer) -->
                                 <button type="button" onclick='cetakLangsung(<?= json_encode($p) ?>)' 
-                                        class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs border border-slate-300 transition cursor-pointer inline-flex items-center gap-1 shadow-xs" 
-                                        title="Cetak Kuitansi SMAN 1 TENJO">
-                                    <?= renderIcon('printer', 'w-3.5 h-3.5') ?>
-                                    <span>Cetak</span>
+                                        class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition cursor-pointer shadow-xs inline-flex items-center justify-center" 
+                                        title="Cetak Kuitansi Transaksi">
+                                    <?= renderIcon('printer', 'w-4 h-4') ?>
                                 </button>
-                                <!-- Tombol Hapus Transaksi (Khusus Admin) -->
+                                <!-- Tombol Hapus Transaksi (Icon Trash, Khusus Admin) -->
                                 <?php if (strtolower($userLogin['level'] ?? '') === 'admin'): ?>
                                 <button type="button" onclick="konfirmasiHapus('index.php?action=pembayaran_hapus&id=<?= $p['id_pembayaran'] ?>', 'Hapus transaksi <?= htmlspecialchars($p['kode_transaksi']) ?>?')" 
-                                        class="px-2.5 py-1 rounded bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs border border-rose-200 transition cursor-pointer inline-flex items-center gap-1 shadow-xs" 
+                                        class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition cursor-pointer shadow-xs inline-flex items-center justify-center" 
                                         title="Hapus Transaksi">
-                                    <?= renderIcon('trash', 'w-3.5 h-3.5') ?>
-                                    <span>Hapus</span>
+                                    <?= renderIcon('trash', 'w-4 h-4') ?>
                                 </button>
                                 <?php endif; ?>
                             </div>
