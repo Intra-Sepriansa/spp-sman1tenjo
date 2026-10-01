@@ -15,3 +15,7 @@
 # Logs & Temp
 *.log
 /tmp/
+
+# Markdown Documentation
+*.md
+
