@@ -85,27 +85,28 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                         <td class="px-4 py-3 font-semibold text-slate-900 whitespace-nowrap"><?= htmlspecialchars($p['nama_siswa']) ?></td>
                         <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= htmlspecialchars($p['nama_kelas']) ?></td>
                         <td class="px-4 py-3 font-medium text-slate-700 whitespace-nowrap"><?= htmlspecialchars($p['bulan_dibayar']) ?> <?= htmlspecialchars($p['tahun_dibayar']) ?></td>
-                        <td class="px-4 py-3 font-bold font-mono text-slate-900 whitespace-nowrap"><?= formatRupiah($p['jumlah_bayar']) ?></td>
-                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= htmlspecialchars($p['metode_pembayaran']) ?></td>
-                        <td class="px-4 py-3">
+                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap">
+                            <span class="inline-block whitespace-nowrap"><?= htmlspecialchars($p['metode_pembayaran']) ?></span>
+                        </td>
+                        <td class="px-4 py-3 whitespace-nowrap">
                             <?php if ($p['status_verifikasi'] === 'Terverifikasi'): ?>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                     Terverifikasi
                                 </span>
                             <?php elseif ($p['status_verifikasi'] === 'Ditolak'): ?>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
                                     <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                                     Ditolak
                                 </span>
                             <?php else: ?>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
                                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                     Menunggu
                                 </span>
                             <?php endif; ?>
                         </td>
-                        <td class="px-4 py-3 text-slate-500 text-[11px] font-medium"><?= htmlspecialchars($p['nama_petugas']) ?></td>
+                        <td class="px-4 py-3 text-slate-500 text-[11px] font-medium whitespace-nowrap"><?= htmlspecialchars($p['nama_petugas']) ?></td>
                         <td class="px-4 py-3 text-center whitespace-nowrap">
                             <div class="inline-flex items-center justify-center space-x-1.5">
                                 <!-- Tombol Cetak Kuitansi Langsung (Icon Printer) -->
