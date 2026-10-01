@@ -60,11 +60,13 @@ $userLogin   = $_SESSION['user'] ?? null;
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        /* Fallback CSS agar SVG tidak pernah membesar liar saat offline/loading */
+        /* Fallback CSS agar SVG tidak pernah membesar liar saat offline/loading dan tidak gepeng saat flexbox */
         svg { display: inline-block; vertical-align: middle; max-width: 100%; }
-        svg.w-4 { width: 1rem !important; height: 1rem !important; }
-        svg.w-5 { width: 1.25rem !important; height: 1.25rem !important; }
-        svg.w-6 { width: 1.5rem !important; height: 1.5rem !important; }
+        svg.w-3\.5 { width: 0.875rem !important; height: 0.875rem !important; min-width: 0.875rem !important; flex-shrink: 0; }
+        svg.w-3 { width: 0.75rem !important; height: 0.75rem !important; min-width: 0.75rem !important; flex-shrink: 0; }
+        svg.w-4 { width: 1rem !important; height: 1rem !important; min-width: 1rem !important; flex-shrink: 0; }
+        svg.w-5 { width: 1.25rem !important; height: 1.25rem !important; min-width: 1.25rem !important; flex-shrink: 0; }
+        svg.w-6 { width: 1.5rem !important; height: 1.5rem !important; min-width: 1.5rem !important; flex-shrink: 0; }
         @media print {
             .no-print { display: none !important; }
             .print-only { display: block !important; }

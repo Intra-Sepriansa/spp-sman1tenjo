@@ -58,16 +58,16 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
         <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
             <thead>
                 <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
-                    <th class="px-4 py-3 whitespace-nowrap">Kode</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Tanggal</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Siswa</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Kelas</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Periode</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Jumlah Bayar</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Metode</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Status</th>
-                    <th class="px-4 py-3 whitespace-nowrap">Petugas</th>
-                    <th class="px-4 py-3 text-center whitespace-nowrap w-24">Aksi</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Kode</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Tanggal</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Siswa</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Kelas</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Periode</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Jumlah Bayar</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Metode</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Status</th>
+                    <th class="px-2.5 py-2.5 whitespace-nowrap">Petugas</th>
+                    <th class="px-2 py-2.5 text-center whitespace-nowrap w-20">Aksi</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
@@ -78,49 +78,50 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                 <?php else: ?>
                     <?php foreach ($daftarPembayaran as $p): ?>
                     <tr class="hover:bg-slate-50/70 transition-colors">
-                        <td class="px-4 py-3 whitespace-nowrap">
-                            <span class="font-mono font-semibold text-xs text-orange-600 bg-orange-50 px-2 py-0.5 rounded border border-orange-200 whitespace-nowrap inline-block"><?= htmlspecialchars($p['kode_transaksi']) ?></span>
+                        <td class="px-2.5 py-2 whitespace-nowrap">
+                            <span class="font-mono font-semibold text-[11px] text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200 whitespace-nowrap inline-block"><?= htmlspecialchars($p['kode_transaksi']) ?></span>
                         </td>
-                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= date('d/m/Y', strtotime($p['tgl_bayar'])) ?></td>
-                        <td class="px-4 py-3 font-semibold text-slate-900 whitespace-nowrap"><?= htmlspecialchars($p['nama_siswa']) ?></td>
-                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= htmlspecialchars($p['nama_kelas']) ?></td>
-                        <td class="px-4 py-3 font-medium text-slate-700 whitespace-nowrap"><?= htmlspecialchars($p['bulan_dibayar']) ?> <?= htmlspecialchars($p['tahun_dibayar']) ?></td>
-                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap">
+                        <td class="px-2.5 py-2 text-slate-600 font-medium whitespace-nowrap text-[11px]"><?= date('d/m/Y', strtotime($p['tgl_bayar'])) ?></td>
+                        <td class="px-2.5 py-2 font-semibold text-slate-900 whitespace-nowrap text-xs"><?= htmlspecialchars($p['nama_siswa']) ?></td>
+                        <td class="px-2.5 py-2 text-slate-600 font-medium whitespace-nowrap text-xs"><?= htmlspecialchars($p['nama_kelas']) ?></td>
+                        <td class="px-2.5 py-2 font-medium text-slate-700 whitespace-nowrap text-xs"><?= htmlspecialchars($p['bulan_dibayar']) ?> <?= htmlspecialchars($p['tahun_dibayar']) ?></td>
+                        <td class="px-2.5 py-2 font-bold font-mono text-slate-900 whitespace-nowrap text-xs"><?= formatRupiah($p['jumlah_bayar']) ?></td>
+                        <td class="px-2.5 py-2 text-slate-600 font-medium whitespace-nowrap text-xs">
                             <span class="inline-block whitespace-nowrap"><?= htmlspecialchars($p['metode_pembayaran']) ?></span>
                         </td>
-                        <td class="px-4 py-3 whitespace-nowrap">
+                        <td class="px-2.5 py-2 whitespace-nowrap">
                             <?php if ($p['status_verifikasi'] === 'Terverifikasi'): ?>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                     Terverifikasi
                                 </span>
                             <?php elseif ($p['status_verifikasi'] === 'Ditolak'): ?>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
                                     <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
                                     Ditolak
                                 </span>
                             <?php else: ?>
-                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">
                                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                     Menunggu
                                 </span>
                             <?php endif; ?>
                         </td>
-                        <td class="px-4 py-3 text-slate-500 text-[11px] font-medium whitespace-nowrap"><?= htmlspecialchars($p['nama_petugas']) ?></td>
-                        <td class="px-4 py-3 text-center whitespace-nowrap">
-                            <div class="inline-flex items-center justify-center space-x-1.5">
+                        <td class="px-2.5 py-2 text-slate-500 text-[11px] font-medium whitespace-nowrap"><?= htmlspecialchars($p['nama_petugas']) ?></td>
+                        <td class="px-2 py-2 text-center whitespace-nowrap">
+                            <div class="inline-flex items-center justify-center space-x-1">
                                 <!-- Tombol Cetak Kuitansi Langsung (Icon Printer) -->
                                 <button type="button" onclick='cetakLangsung(<?= json_encode($p) ?>)' 
-                                        class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition cursor-pointer shadow-xs inline-flex items-center justify-center" 
+                                        class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition cursor-pointer shadow-xs inline-flex items-center justify-center shrink-0" 
                                         title="Cetak Kuitansi Transaksi">
-                                    <?= renderIcon('printer', 'w-4 h-4') ?>
+                                    <?= renderIcon('printer', 'w-3.5 h-3.5 shrink-0') ?>
                                 </button>
                                 <!-- Tombol Hapus Transaksi (Icon Trash, Khusus Admin) -->
                                 <?php if (strtolower($userLogin['level'] ?? '') === 'admin'): ?>
                                 <button type="button" onclick="konfirmasiHapus('index.php?action=pembayaran_hapus&id=<?= $p['id_pembayaran'] ?>', 'Hapus transaksi <?= htmlspecialchars($p['kode_transaksi']) ?>?')" 
-                                        class="p-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition cursor-pointer shadow-xs inline-flex items-center justify-center" 
+                                        class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 transition cursor-pointer shadow-xs inline-flex items-center justify-center shrink-0" 
                                         title="Hapus Transaksi">
-                                    <?= renderIcon('trash', 'w-4 h-4') ?>
+                                    <?= renderIcon('trash', 'w-3.5 h-3.5 shrink-0') ?>
                                 </button>
                                 <?php endif; ?>
                             </div>

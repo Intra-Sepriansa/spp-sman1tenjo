@@ -127,10 +127,14 @@ function renderIcon(string $name, string $class = 'w-5 h-5'): string
 {
     // Tentukan fallback ukuran pixel agar icon tidak pernah membesar liar jika CSS belum selesai termuat
     $size = '20';
-    if (strpos($class, 'w-4') !== false) {
-        $size = '16';
+    if (strpos($class, 'w-3.5') !== false) {
+        $size = '14';
     } elseif (strpos($class, 'w-3') !== false) {
         $size = '12';
+    } elseif (strpos($class, 'w-4') !== false) {
+        $size = '16';
+    } elseif (strpos($class, 'w-5') !== false) {
+        $size = '20';
     } elseif (strpos($class, 'w-6') !== false) {
         $size = '24';
     } elseif (strpos($class, 'w-8') !== false) {
