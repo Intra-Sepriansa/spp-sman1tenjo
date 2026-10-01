@@ -75,8 +75,8 @@ require_once __DIR__ . '/layouts/header.php';
                             <span class="text-[10px] text-slate-400 block mt-0.5 font-mono">NIS: <?= htmlspecialchars($s['nis']) ?></span>
                         </td>
                         <td class="px-4 py-3 font-semibold text-slate-900"><?= htmlspecialchars($s['nama']) ?></td>
-                        <td class="px-4 py-3">
-                            <span class="px-2 py-0.5 rounded bg-slate-100 font-semibold text-slate-700 text-[11px] border border-slate-200"><?= htmlspecialchars($s['nama_kelas']) ?></span>
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            <span class="px-2 py-0.5 rounded bg-slate-100 font-semibold text-slate-700 text-[11px] border border-slate-200 whitespace-nowrap"><?= htmlspecialchars($s['nama_kelas']) ?></span>
                         </td>
                         <td class="px-4 py-3 text-slate-600 font-mono text-[11px]"><?= htmlspecialchars($s['no_telp']) ?></td>
                         <td class="px-4 py-3 text-slate-500 max-w-xs truncate"><?= htmlspecialchars($s['alamat']) ?></td>

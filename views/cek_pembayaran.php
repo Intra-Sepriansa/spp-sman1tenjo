@@ -97,7 +97,7 @@ require_once __DIR__ . '/layouts/header.php';
                         </div>
                         <div>
                             <span class="text-slate-500">Kelas:</span>
-                            <span class="font-medium text-slate-800 ml-1"><?= htmlspecialchars($siswaDitemukan['nama_kelas']) ?> (<?= htmlspecialchars($siswaDitemukan['kompetensi_keahlian']) ?>)</span>
+                            <span class="font-semibold text-slate-800 ml-1 whitespace-nowrap"><?= htmlspecialchars($siswaDitemukan['nama_kelas']) ?></span> <span class="text-slate-500">(<?= htmlspecialchars($siswaDitemukan['kompetensi_keahlian']) ?>)</span>
                         </div>
                         <div>
                             <span class="text-slate-500">Tarif SPP:</span>

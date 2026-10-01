@@ -55,18 +55,18 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
 <!-- 2. Tabel Histori Seluruh Transaksi Pembayaran (no-print) -->
 <div class="bg-white rounded-xl shadow-xs border border-slate-300/80 overflow-hidden no-print">
     <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs">
+        <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
             <thead>
                 <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
                     <th class="px-4 py-3 whitespace-nowrap">Kode</th>
-                    <th class="px-4 py-3">Tanggal</th>
-                    <th class="px-4 py-3">Siswa</th>
-                    <th class="px-4 py-3">Kelas</th>
-                    <th class="px-4 py-3">Periode</th>
-                    <th class="px-4 py-3">Jumlah Bayar</th>
-                    <th class="px-4 py-3">Metode</th>
-                    <th class="px-4 py-3">Status</th>
-                    <th class="px-4 py-3">Petugas</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Tanggal</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Siswa</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Kelas</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Periode</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Jumlah Bayar</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Metode</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Status</th>
+                    <th class="px-4 py-3 whitespace-nowrap">Petugas</th>
                     <th class="px-4 py-3 text-center whitespace-nowrap w-24">Aksi</th>
                 </tr>
             </thead>
@@ -81,12 +81,12 @@ $daftarBulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 
                         <td class="px-4 py-3 whitespace-nowrap">
                             <span class="font-mono font-semibold text-xs text-orange-600 bg-orange-50 px-2 py-0.5 rounded border border-orange-200 whitespace-nowrap inline-block"><?= htmlspecialchars($p['kode_transaksi']) ?></span>
                         </td>
-                        <td class="px-4 py-3 text-slate-600 font-medium"><?= date('d/m/Y', strtotime($p['tgl_bayar'])) ?></td>
-                        <td class="px-4 py-3 font-semibold text-slate-900"><?= htmlspecialchars($p['nama_siswa']) ?></td>
-                        <td class="px-4 py-3 text-slate-600 font-medium"><?= htmlspecialchars($p['nama_kelas']) ?></td>
-                        <td class="px-4 py-3 font-medium text-slate-700"><?= htmlspecialchars($p['bulan_dibayar']) ?> <?= htmlspecialchars($p['tahun_dibayar']) ?></td>
-                        <td class="px-4 py-3 font-bold font-mono text-slate-900"><?= formatRupiah($p['jumlah_bayar']) ?></td>
-                        <td class="px-4 py-3 text-slate-600 font-medium"><?= htmlspecialchars($p['metode_pembayaran']) ?></td>
+                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= date('d/m/Y', strtotime($p['tgl_bayar'])) ?></td>
+                        <td class="px-4 py-3 font-semibold text-slate-900 whitespace-nowrap"><?= htmlspecialchars($p['nama_siswa']) ?></td>
+                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= htmlspecialchars($p['nama_kelas']) ?></td>
+                        <td class="px-4 py-3 font-medium text-slate-700 whitespace-nowrap"><?= htmlspecialchars($p['bulan_dibayar']) ?> <?= htmlspecialchars($p['tahun_dibayar']) ?></td>
+                        <td class="px-4 py-3 font-bold font-mono text-slate-900 whitespace-nowrap"><?= formatRupiah($p['jumlah_bayar']) ?></td>
+                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= htmlspecialchars($p['metode_pembayaran']) ?></td>
                         <td class="px-4 py-3">
                             <?php if ($p['status_verifikasi'] === 'Terverifikasi'): ?>
                                 <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">

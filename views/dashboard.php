@@ -107,7 +107,7 @@ require_once __DIR__ . '/layouts/header.php';
                             <span class="font-mono font-semibold text-xs text-orange-600 bg-orange-50 px-2 py-0.5 rounded border border-orange-200 whitespace-nowrap inline-block"><?= htmlspecialchars($trx['kode_transaksi']) ?></span>
                         </td>
                         <td class="px-4 py-3 font-semibold text-slate-900"><?= htmlspecialchars($trx['nama_siswa']) ?></td>
-                        <td class="px-4 py-3 text-slate-600 font-medium"><?= htmlspecialchars($trx['nama_kelas']) ?></td>
+                        <td class="px-4 py-3 text-slate-600 font-medium whitespace-nowrap"><?= htmlspecialchars($trx['nama_kelas']) ?></td>
                         <td class="px-4 py-3 font-medium text-slate-700"><?= htmlspecialchars($trx['bulan_dibayar']) ?> <?= htmlspecialchars($trx['tahun_dibayar']) ?></td>
                         <td class="px-4 py-3 font-bold font-mono text-slate-900"><?= formatRupiah($trx['jumlah_bayar']) ?></td>
                         <td class="px-4 py-3">

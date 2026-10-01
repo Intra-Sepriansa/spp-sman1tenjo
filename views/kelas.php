@@ -46,7 +46,7 @@ require_once __DIR__ . '/layouts/header.php';
                 <?php $no = 1; foreach ($daftarKelas as $k): ?>
                 <tr class="hover:bg-slate-50/70 transition-colors">
                     <td class="px-4 py-3 text-center text-slate-400 font-mono text-[11px]"><?= $no++ ?></td>
-                    <td class="px-4 py-3 font-semibold text-slate-900"><?= htmlspecialchars($k['nama_kelas']) ?></td>
+                    <td class="px-4 py-3 font-semibold text-slate-900 whitespace-nowrap"><?= htmlspecialchars($k['nama_kelas']) ?></td>
                     <td class="px-4 py-3 text-slate-600 font-medium"><?= htmlspecialchars($k['kompetensi_keahlian']) ?></td>
                     <td class="px-4 py-3 text-center">
                         <div class="flex items-center justify-center space-x-1.5">
